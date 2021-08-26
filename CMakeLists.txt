@@ -1,5 +1,5 @@
 
-project(VolumeVisionaryT)
+project(write-pointcloud)
 cmake_minimum_required(VERSION 2.8)
 find_package(PCL 1.2 REQUIRED)
 
@@ -20,9 +20,7 @@ include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
-## Visionary-S sample ##
-
 ## Visionary-T sample ##
-add_executable(write-background write-background.cpp)
-target_link_libraries(write-background sick_visionary_common ${PCL_LIBRARIES})
+add_executable(write-pointcloud write-pointcloud.cpp)
+target_link_libraries(write-pointcloud sick_visionary_common ${PCL_LIBRARIES})
 
