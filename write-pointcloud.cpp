@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <termio.h>
 #include <unistd.h>
 #include <boost/shared_ptr.hpp>
@@ -14,12 +15,11 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <ctime>
-#include <string>
 
 std::vector<PointXYZ> pointCloud;
 boost::shared_ptr<VisionaryTData> pDataHandler;
 pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-
+pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_concat (new pcl::PointCloud<pcl::PointXYZ>);
 ///////////////////////////////////////////////////////
 
 void runStreamingDemo(char* ipAddress, unsigned short port)
@@ -57,11 +57,10 @@ void runStreamingDemo(char* ipAddress, unsigned short port)
 		cloud->points[i].y = pointCloud[i].y;
 		cloud->points[i].z = pointCloud[i].z;
 	}
-	
-	std::time_t t = std::time(0);
-	printf("%s", t);
-	//std::string filename = numToString(t);
-	//pcl::io::savePCDFileASCII (filename, *cloud);
+	*cloud_concat = (*cloud_concat)+(*cloud);
+
+	std::time_t t = std::time(NULL);
+	pcl::io::savePCDFileASCII (std::to_string(t)+".pcd", *cloud_concat);
 	
 	control.stopAcquisition();
 	control.closeConnection();

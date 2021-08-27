@@ -23,6 +23,6 @@ add_definitions(${PCL_DEFINITIONS})
 ## Visionary-S sample ##
 
 ## Visionary-T sample ##
-add_executable(write-background write-background.cpp)
-target_link_libraries(write-background sick_visionary_common ${PCL_LIBRARIES})
+add_executable(write-pointcloud write-pointcloud.cpp)
+target_link_libraries(write-pointcloud sick_visionary_common ${PCL_LIBRARIES})
 
