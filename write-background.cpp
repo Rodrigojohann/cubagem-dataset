@@ -14,12 +14,11 @@
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-
+#include <ctime>
 
 std::vector<PointXYZ> pointCloud;
 boost::shared_ptr<VisionaryTData> pDataHandler;
 pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
-pcl::PointCloud<pcl::PointXYZ>::Ptr cloud1 (new pcl::PointCloud<pcl::PointXYZ>);
 pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_concat (new pcl::PointCloud<pcl::PointXYZ>);
 ///////////////////////////////////////////////////////
 
@@ -44,8 +43,6 @@ void runStreamingDemo(char* ipAddress, unsigned short port)
 	control.stopAcquisition();
 	control.startAcquisition();
 	
-	for (int i = 0; i < 50; i++)
-	{
 	if (dataStream.getNextFrame())
 		{
 			// Convert data to a point cloud
@@ -60,10 +57,11 @@ void runStreamingDemo(char* ipAddress, unsigned short port)
 		cloud->points[i].y = pointCloud[i].y;
 		cloud->points[i].z = pointCloud[i].z;
 	}
-	*cloud_concat = (*cloud_concat) + (*cloud);
-	}
+	*cloud_concat = (*cloud_concat)+(*cloud);
+
+	std::time_t t = std::time(NULL);
 	
-	pcl::io::savePCDFileASCII ("backgroundcloud5.pcd", *cloud_concat);
+	pcl::io::savePCDFileASCII (std::to_string(t)+".pcd", *cloud_concat);
 	
 	control.stopAcquisition();
 	control.closeConnection();
@@ -73,5 +71,5 @@ void runStreamingDemo(char* ipAddress, unsigned short port)
 
 int main()
 {
-	runStreamingDemo((char*)"192.168.140.34", 2114);
+	runStreamingDemo((char*)"192.168.140.2", 2114);
 }
