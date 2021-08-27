@@ -59,8 +59,9 @@ void runStreamingDemo(char* ipAddress, unsigned short port)
 	}
 	
 	std::time_t t = std::time(0);
-	std::string filename = numToString(t);
-	pcl::io::savePCDFileASCII (filename, *cloud);
+	printf("%s", t);
+	//std::string filename = numToString(t);
+	//pcl::io::savePCDFileASCII (filename, *cloud);
 	
 	control.stopAcquisition();
 	control.closeConnection();
