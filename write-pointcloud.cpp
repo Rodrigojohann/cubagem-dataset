@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 #include <termio.h>
 #include <unistd.h>
 #include <boost/shared_ptr.hpp>
@@ -15,6 +14,7 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <ctime>
+#include <string>
 
 std::vector<PointXYZ> pointCloud;
 boost::shared_ptr<VisionaryTData> pDataHandler;
